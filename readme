@@ -1,0 +1,23 @@
+# Discord Timestamp Bot
+
+A simple Discord bot that converts natural language date/time (e.g., "tomorrow 8pm" or "July 28 2025 6pm") into a Discord timestamp format that automatically adjusts to each user's local time.
+
+---
+
+## Features
+- `/timestamp <date/time>` – Convert natural language dates into `<t:UNIX:format>` Discord timestamps.
+- Accepts flexible date/time inputs:
+  - `july 28 2025 6pm`
+  - `28/07/25 18:00`
+  - `tomorrow 8pm`
+- Automatically adjusts time display for each user's local timezone.
+- Safe token storage using `.env` file.
+
+---
+
+## Setup
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/<your-username>/<your-repo-name>.git
+cd <your-repo-name>
