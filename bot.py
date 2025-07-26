@@ -1,12 +1,10 @@
 import discord
 from discord import app_commands
 from discord.ext import commands
-from dotenv import load_dotenv
 import os
 import dateparser  # Natural language date parsing
 
-# Load token
-load_dotenv()
+# Load token directly from environment variables
 TOKEN = os.getenv("DISCORD_TOKEN")
 print("DEBUG: DISCORD_TOKEN exists?", bool(TOKEN))
 if not TOKEN:
