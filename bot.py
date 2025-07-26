@@ -8,6 +8,9 @@ import dateparser  # Natural language date parsing
 # Load token
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
+print("DEBUG: DISCORD_TOKEN exists?", bool(TOKEN))
+if not TOKEN:
+    raise ValueError("ERROR: DISCORD_TOKEN is missing!")
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
