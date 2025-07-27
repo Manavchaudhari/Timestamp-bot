@@ -11,7 +11,7 @@ if not TOKEN:
     raise ValueError("ERROR: DISCORD_TOKEN is missing!")
 
 intents = discord.Intents.default()
-intents.message_content = True 
+intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
@@ -37,8 +37,9 @@ async def timestamp(interaction: discord.Interaction, *, datetime_str: str):
         dt = dateparser.parse(
             datetime_str,
             settings={
-                'TIMEZONE': 'local',
-                'RETURN_AS_TIMEZONE_AWARE': True
+                'TIMEZONE': 'local',              # Use system's local timezone
+                'TO_TIMEZONE': 'local',           # Convert parsed time to local
+                'RETURN_AS_TIMEZONE_AWARE': True  # Keep timezone info
             }
         )
 
