@@ -43,11 +43,16 @@ async def timestamp(ctx: commands.Context, *, datetime_str: str):
 
         # Convert to local timezone (system timezone)
         local_tz = datetime.now().astimezone().tzinfo
-        dt = time_struct.astimezone(local_tz)
+        dt = time_struct.replace(tzinfo=local_tz)
+
+        # Debug info
+        print(f"[DEBUG] Parsed datetime: {dt} (Local TZ: {local_tz})")
+        print(f"[DEBUG] UNIX timestamp: {int(dt.timestamp())}")
 
         unix_time = int(dt.timestamp())
         await ctx.send(f"Here’s your timestamp: <t:{unix_time}:f>")
-    except Exception:
+    except Exception as e:
+        print(f"[ERROR] {e}")
         await ctx.send(
             "Invalid date/time! Examples: `!timestamp july 28 2025 6pm` or `!timestamp tomorrow 8pm`."
         )
