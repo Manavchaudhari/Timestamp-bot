@@ -1,7 +1,9 @@
 import discord
 from discord.ext import commands
 import os
-import dateparser  # Natural language date parsing
+import parsedatetime  # Natural language date parsing
+from datetime import datetime
+import pytz  # For timezone handling
 
 # Load token directly from environment variables
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -32,18 +34,16 @@ async def timestamp(ctx: commands.Context, *, datetime_str: str):
       !timestamp july 28 2025 6pm
     """
     try:
-        # Parse date/time using local timezone
-        dt = dateparser.parse(
-            datetime_str,
-            settings={
-                'TIMEZONE': 'local',
-                'TO_TIMEZONE': 'local',
-                'RETURN_AS_TIMEZONE_AWARE': True
-            }
-        )
+        # Use parsedatetime for better natural language support
+        cal = parsedatetime.Calendar()
+        time_struct, parse_status = cal.parseDT(datetime_str, datetime.now())
 
-        if not dt:
+        if parse_status == 0:  # Failed to parse
             raise ValueError("Could not parse date/time.")
+
+        # Convert to local timezone (system timezone)
+        local_tz = datetime.now().astimezone().tzinfo
+        dt = time_struct.astimezone(local_tz)
 
         unix_time = int(dt.timestamp())
         await ctx.send(f"Here’s your timestamp: <t:{unix_time}:f>")
