@@ -32,7 +32,15 @@ async def timestamp(interaction: discord.Interaction, *, datetime_str: str):
       /timestamp 28th july 2025 18:00
     """
     try:
-        dt = dateparser.parse(datetime_str)
+        # Parse date/time using local timezone
+        dt = dateparser.parse(
+            datetime_str,
+            settings={
+                'TIMEZONE': 'local',
+                'RETURN_AS_TIMEZONE_AWARE': True
+            }
+        )
+
         if not dt:
             raise ValueError("Could not parse date/time.")
 
